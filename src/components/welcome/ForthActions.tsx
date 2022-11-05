@@ -2,14 +2,14 @@ import s from './welcome.module.less'
 import { FunctionalComponent } from 'vue'
 import { RouterLink } from 'vue-router'
 
-export const SecondActions: FunctionalComponent = () => {
+export const ForthActions: FunctionalComponent = () => {
   return (
     <div class={s.actions}>
       <RouterLink class={s.fake} to='/start'>跳过</RouterLink>
-      <RouterLink to='/welcome/3'>下一页</RouterLink>
-      <RouterLink to='/start'>跳过</RouterLink>
+      <RouterLink to='/start'>开启应用</RouterLink>
+      <RouterLink class={s.fake} to='/start'>跳过</RouterLink>
     </div>
   )
 }
 
-SecondActions.displayName = 'SecondActions'
+ForthActions.displayName = 'ForthActions'
