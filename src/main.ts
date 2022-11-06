@@ -2,6 +2,7 @@ import { createApp } from 'vue'
 import { App } from './App'
 import { createRouter, createWebHashHistory } from 'vue-router'
 import { routes } from './config/router'
+import '@gullsvgstore'
 
 const router = createRouter({
   history: createWebHashHistory(),
