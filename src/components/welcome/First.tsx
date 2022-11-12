@@ -1,6 +1,5 @@
 import s from './welcome.module.less'
 import { FunctionalComponent } from 'vue'
-import pig from '../../assets/icons/pig.svg'
 
 export const First: FunctionalComponent = () => {
   return (

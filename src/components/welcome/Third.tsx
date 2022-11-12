@@ -1,6 +1,5 @@
 import s from './welcome.module.less'
 import { FunctionalComponent } from 'vue'
-import chart from '../../assets/icons/chart.svg'
 
 export const Third: FunctionalComponent = () => {
   return (

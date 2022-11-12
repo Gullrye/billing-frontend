@@ -1,6 +1,5 @@
 import s from './welcome.module.less'
 import { FunctionalComponent } from 'vue'
-import cloud from '../../assets/icons/cloud.svg'
 
 export const Forth: FunctionalComponent = () => {
   return (

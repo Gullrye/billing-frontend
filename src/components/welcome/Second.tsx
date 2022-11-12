@@ -1,6 +1,5 @@
 import s from './welcome.module.less'
 import { FunctionalComponent } from 'vue'
-import clock from '../../assets/icons/clock.svg'
 
 export const Second: FunctionalComponent = () => {
   return (
