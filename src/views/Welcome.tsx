@@ -13,7 +13,11 @@ export const Welcome = defineComponent({
       'Welcome4': '/start',
     }
     const mainRef = ref<HTMLElement>()
-    const { isSwiping, direction } = useSwipe(mainRef)
+    /**
+     * @desc beforeStart: e => e.preventDefault()
+     * 滑动 main 元素时，阻止浏览器页面（即 main 元素的背景页面）的滑动
+     */
+    const { isSwiping, direction } = useSwipe(mainRef, { beforeStart: e => e.preventDefault() })
     const router = useRouter()
     const route = useRoute()
     const changeRouter = throttle(() => {

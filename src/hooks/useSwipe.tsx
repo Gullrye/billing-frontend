@@ -5,8 +5,16 @@ type Point = {
   y: number
 }
 
+interface Options {
+  beforeStart?: (e: TouchEvent) => void
+  afterStart?: (e: TouchEvent) => void
+  beforeMove?: (e: TouchEvent) => void
+  afterMove?: (e: TouchEvent) => void
+  beforeEnd?: (e: TouchEvent) => void
+  afterEnd?: (e: TouchEvent) => void
+}
 
-export const useSwipe = (element: Ref<HTMLElement | undefined>) => {
+export const useSwipe = (element: Ref<HTMLElement | undefined>, options?: Options) => {
   const startPoint = ref<Point>()
   const endPoint = ref<Point>()
   let isSwiping = ref(false)
@@ -16,22 +24,28 @@ export const useSwipe = (element: Ref<HTMLElement | undefined>) => {
     let distanceX = endPoint.value.x - startPoint.value.x
     let distanceY = endPoint.value.y - startPoint.value.y
     // 左移了，且距离大于 y 的移动，为向左滑动
-    if(Math.abs(distanceX) > Math.abs(distanceY)) {
-      return distanceX < 0 ? 'left' : 'right' 
+    if (Math.abs(distanceX) > Math.abs(distanceY)) {
+      return distanceX < 0 ? 'left' : 'right'
     } else {
-      return distanceY < 0 ? 'down' : 'up' 
+      return distanceY < 0 ? 'down' : 'up'
     }
   })
 
   const onStart = (e: TouchEvent) => {
+    options?.beforeStart?.(e)
     isSwiping.value = true
     endPoint.value = startPoint.value = { x: e.touches[0].screenX, y: e.touches[0].screenY }
+    options?.afterStart?.(e)
   }
   const onMove = (e: TouchEvent) => {
+    options?.beforeMove?.(e)
     endPoint.value = { x: e.touches[0].screenX, y: e.touches[0].screenY }
+    options?.afterMove?.(e)
   }
   const onEnd = (e: TouchEvent) => {
+    options?.beforeEnd?.(e)
     isSwiping.value = false
+    options?.afterEnd?.(e)
   }
 
   onMounted(() => {
