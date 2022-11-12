@@ -1,5 +1,5 @@
 import { defineComponent, ref, Transition, VNode, watchEffect } from 'vue'
-import { RouteLocationNormalizedLoaded, RouteRecordName, RouterView, useRoute, useRouter } from 'vue-router'
+import { RouteLocationNormalizedLoaded, RouterView, useRoute, useRouter } from 'vue-router'
 import { useSwipe } from '../hooks/useSwipe'
 import { throttle } from '../shared/throttle'
 import s from './Welcome.module.less'
@@ -13,11 +13,15 @@ export const Welcome = defineComponent({
       'Welcome4': '/start',
     }
     const mainRef = ref<HTMLElement>()
+    const wrapperRef = ref<HTMLElement>()
+
     /**
-     * @desc beforeStart: e => e.preventDefault()
-     * 滑动 main 元素时，阻止浏览器页面（即 main 元素的背景页面）的滑动
+     * @desc 
+     * beforeStart: e => e.preventDefault() 滑动 main 元素时，阻止浏览器页面（即 main 元素的背景页面）的滑动
+     * useSwipe 内有 onMounted 监听 touch 事件，传入 wrapperRef 在 useSwipe 内获取 wrapperRef 的宽度，即页面宽度 pageWidth，若滑动距离大于 1/6 pageWidth，则滑动。
+     * 在 Welcome.tsx 文件写 onMounted 并在该生命周期内 useSwipe()，则 useSwipe 里的 onMounted 不执行，监听不到 touch 事件，故不传入页面宽度，而是传入页面元素。
      */
-    const { isSwiping, direction } = useSwipe(mainRef, { beforeStart: e => e.preventDefault() })
+    const { isSwiping, direction } = useSwipe(mainRef, { beforeStart: e => e.preventDefault(), wrapperRef })
     const router = useRouter()
     const route = useRoute()
     const changeRouter = throttle(() => {
@@ -30,7 +34,7 @@ export const Welcome = defineComponent({
       }
     })
     return () => (
-      <div class={s.wrapper}>
+      <div class={s.wrapper} ref={wrapperRef}>
         <header>
           <svg>
             <use xlinkHref='#mangosteen'></use>

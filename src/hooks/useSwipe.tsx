@@ -12,6 +12,8 @@ interface Options {
   afterMove?: (e: TouchEvent) => void
   beforeEnd?: (e: TouchEvent) => void
   afterEnd?: (e: TouchEvent) => void
+
+  wrapperRef: Ref<HTMLElement | undefined>
 }
 
 export const useSwipe = (element: Ref<HTMLElement | undefined>, options?: Options) => {
@@ -23,9 +25,16 @@ export const useSwipe = (element: Ref<HTMLElement | undefined>, options?: Option
     if (!startPoint.value || !endPoint.value) return ''
     let distanceX = endPoint.value.x - startPoint.value.x
     let distanceY = endPoint.value.y - startPoint.value.y
-    // 左移了，且距离大于 y 的移动，为向左滑动
+    // 向左滑动：左移，且距离大于 y 的移动
     if (Math.abs(distanceX) > Math.abs(distanceY)) {
-      return distanceX < 0 ? 'left' : 'right'
+      let flag = true
+      let pageWidth = options?.wrapperRef.value?.clientWidth
+      if(!pageWidth || (pageWidth && Math.abs(distanceX) >= pageWidth / 6)) {
+        flag = true
+      } else {
+        flag = false
+      }
+      return distanceX < 0 && flag ? 'left' : 'right'
     } else {
       return distanceY < 0 ? 'down' : 'up'
     }
