@@ -14,3 +14,15 @@ body {
 ::webkit-scrollbar {
   visibility: hidden;
 }
+
+
+.default-fade-enter-active,
+.default-fade-leave-active {
+  transition: all .3s ease-out;
+}
+.default-fade-enter-from {
+  transform: translateX(-100%);
+}
+.default-fade-leave-to {
+  transform: translateX(-100%);
+}
