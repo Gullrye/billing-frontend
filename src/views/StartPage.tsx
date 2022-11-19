@@ -12,7 +12,6 @@ export const StartPage = defineComponent({
   setup: (props, context) => {
     const overlayVisible = ref(false)
     const onClick = () => {
-      console.log('cc')
     }
     const onClickMenu = () => {
       overlayVisible.value = true

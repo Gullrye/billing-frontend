@@ -32,7 +32,6 @@ export const EmojiSelect = defineComponent({
       refSelected.value = index
     }
     const onClickEmoji = (emoji: string) => {
-      console.log('%c [ emoji ]-38', 'font-size:13px; background:#6639a6; color:#aa7dea;', emoji+'')
       context.emit('update:modelValue', emoji)
     }
     const emojis = computed(() => {

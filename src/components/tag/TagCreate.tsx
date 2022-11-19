@@ -23,7 +23,6 @@ export const TagCreate = defineComponent({
       const errs = validate(formData, rules)
       errors.name = errs.name
       errors.sign = errs.sign
-      console.log('%c [ errs ]-26', 'font-size:13px; background:#2fd789; color:#73ffcd;', errs)
       e.preventDefault()
     }
     return () => (
