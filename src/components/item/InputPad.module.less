@@ -29,7 +29,7 @@
     "n1 n2 n3 d"
     "n4 n5 n6 d"
     "n7 n8 n9 s"
-    "n0 n0 nd s";
+    "ce n0 nd s";
   grid-auto-rows: 48px;
   grid-auto-columns: 1fr;
   gap: 1px;
@@ -37,6 +37,7 @@
   background: var(--button-border-color);
   border-top: 1px solid var(--button-border-color);
   > button {
+    user-select: none;
     border: none;
     background: var(--number-button-bg);
     &:nth-child(1) {
@@ -73,12 +74,25 @@
       grid-area: n0;
     }
     &:nth-child(12) {
-      grid-area: d;
+      grid-area: ce;
     }
     &:nth-child(13) {
+      grid-area: d;
+    }
+    &:nth-child(14) {
       grid-area: s;
       background: var(--number-button-bg-important);
       color: var(--number-button-text-important);
     }
+  }
+}
+.buttons > button.active_bg {
+  animation: .3s bgFade;
+}
+@keyframes bgFade {
+  0% {
+    background: rgba(0,0,0,.1);
+  }
+  100% {
   }
 }
