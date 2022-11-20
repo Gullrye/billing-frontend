@@ -3,11 +3,12 @@ import s from './Tabs.module.less'
 
 export const Tabs = defineComponent({
   props: {
-    active: {
+    selected: {
       type: String as PropType<string>,
       required: false
     }
   },
+  emits: ['update:selected'],
   setup: (props, context) => {
     return () => {
       const tabs = context.slots.default?.()
@@ -22,14 +23,14 @@ export const Tabs = defineComponent({
         <div class={s.tabs_nav}>
           {
             tabs.map((item) =>
-              <div class={[s.tab, item.props?.name === props.active ? s.active : '']} onClick={() => context.emit('update:active', item.props?.name)}>
+              <div class={[s.tab, item.props?.name === props.selected ? s.selected : '']} onClick={() => context.emit('update:selected', item.props?.name)}>
                 {item.props?.name}
               </div>
             )
           }
         </div>
         <div>
-          {tabs.find((item) => item.props?.name === props.active)}
+          {tabs.find((item) => item.props?.name === props.selected)}
         </div>
       </div>
     }
