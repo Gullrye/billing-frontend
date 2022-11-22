@@ -1,5 +1,6 @@
 import { DatetimePicker, Popup } from 'vant'
 import { computed, defineComponent, PropType, ref } from 'vue'
+import { Button } from './Button'
 import { EmojiSelect } from './EmojiSelect'
 import s from './Form.module.less'
 import { Time } from './time'
@@ -28,7 +29,7 @@ export const FormItem = defineComponent({
       type: String
     },
     type: {
-      type: String as PropType<'text' | 'emojiSelect' | 'date' | 'select'>
+      type: String as PropType<'text' | 'emojiSelect' | 'date' | 'select' | 'validationCode'>
     },
     placeholder: {
       type: String
@@ -37,7 +38,7 @@ export const FormItem = defineComponent({
       type: [String, Number]
     },
     options: {
-      type: Array as PropType<Array<{value: string, text: string}>>
+      type: Array as PropType<Array<{ value: string, text: string }>>
     }
   },
   emits: ['update:modelValue'],
@@ -46,7 +47,7 @@ export const FormItem = defineComponent({
     const content = computed(() => {
       switch (props.type) {
         case 'text':
-          return <input value={props.modelValue} onInput={(e: Event) => { context.emit('update:modelValue', (e.target as HTMLInputElement).value) }} class={[s.formItem, s.input, props.error ? s.error : '']} />
+          return <input value={props.modelValue} onInput={(e: Event) => { context.emit('update:modelValue', (e.target as HTMLInputElement).value) }} class={[s.formItem, s.input, props.error ? s.error : '']} placeholder={props.placeholder} />
         case 'emojiSelect':
           return <EmojiSelect modelValue={props.modelValue?.toString()} onUpdateModelValue={(newValue) => context.emit('update:modelValue', newValue)} class={[s.formItem, s.emojiList, props.error ? s.error : '']} />
         case 'date':
@@ -70,6 +71,14 @@ export const FormItem = defineComponent({
               <option value={option.value}>{option.text}</option>
             )}
           </select>
+        case 'validationCode':
+          return <>
+            <input value={props.modelValue} onInput={(e: Event) => { context.emit('update:modelValue', (e.target as HTMLInputElement).value) }} class={[s.formItem, s.input, s.validationCodeInput]}
+              placeholder={props.placeholder} />
+            <Button class={[s.formItem, s.button, s.validationCodeButton]}>
+              发送验证码
+            </Button>
+          </>
         default:
           return context.slots.default?.()
       }
