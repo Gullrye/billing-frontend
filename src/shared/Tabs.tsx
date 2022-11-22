@@ -3,6 +3,9 @@ import s from './Tabs.module.less'
 
 export const Tabs = defineComponent({
   props: {
+    classPrefix: {
+      type: String
+    },
     selected: {
       type: String as PropType<string>,
       required: false
@@ -18,12 +21,12 @@ export const Tabs = defineComponent({
           throw new Error('<Tabs> only accepts <Tab> as children')
         }
       })
-
-      return <div class={s.tabs}>
-        <div class={s.tabs_nav}>
+      const cp = props.classPrefix
+      return <div class={[s.tabs, cp + '_tabs']}>
+        <div class={[s.tabs_nav, cp + '_tabs_nav']}>
           {
             tabs.map((item) =>
-              <div class={[s.tab, item.props?.name === props.selected ? s.selected : '']} onClick={() => context.emit('update:selected', item.props?.name)}>
+              <div class={[s.tab, cp + '_tabs_nav_item', item.props?.name === props.selected ? [s.selected, cp + '_selected'] : '']} onClick={() => context.emit('update:selected', item.props?.name)}>
                 {item.props?.name}
               </div>
             )

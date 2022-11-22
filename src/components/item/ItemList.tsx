@@ -1,10 +1,11 @@
 import { defineComponent } from 'vue'
-import s from './ItemList.module.less'
+import { TimeTabsLayout } from '../../layouts/TimeTabsLayout'
+import { ItemSummary } from './ItemSummary'
 
 export const ItemList = defineComponent({
   setup: (props, context) => {
     return () => (
-      <div>ItemList</div>
+      <TimeTabsLayout component={ItemSummary} />
     )
   }
 })
