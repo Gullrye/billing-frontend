@@ -28,7 +28,7 @@ export const FormItem = defineComponent({
       type: String
     },
     type: {
-      type: String as PropType<'text' | 'emojiSelect' | 'date'>
+      type: String as PropType<'text' | 'emojiSelect' | 'date' | 'select'>
     },
     placeholder: {
       type: String
@@ -36,6 +36,9 @@ export const FormItem = defineComponent({
     modelValue: {
       type: [String, Number]
     },
+    options: {
+      type: Array as PropType<Array<{value: string, text: string}>>
+    }
   },
   emits: ['update:modelValue'],
   setup: (props, context) => {
@@ -60,6 +63,13 @@ export const FormItem = defineComponent({
                 }}
                 onCancel={() => refDateVisible.value = false} />
             </Popup></>
+        case 'select':
+          return <select class={[s.formItem, s.select]} value={props.modelValue}
+            onChange={(e: any) => { context.emit('update:modelValue', e.target.value) }}>
+            {props.options?.map(option =>
+              <option value={option.value}>{option.text}</option>
+            )}
+          </select>
         default:
           return context.slots.default?.()
       }
